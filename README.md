@@ -25,11 +25,11 @@
 ## Notas personales
 
 Elegí este dataset porque ya viene en `sklearn`, es todo numérico y es fácil de reproducir.
-Probé varios k chicos/medianos y con **k=9** me fue mejor (menos ruido sin perder recall).
-En el árbol le puse límites (**max_depth** y **min_samples_leaf**) para que no sobreajuste.
+Probé varios k chicos/medianos y con k=9 me fue mejor (menos ruido sin perder recall).
+En el árbol le puse límites (max_depth y min_samples_leaf para que no sobreajuste.
 
 ## Conclusiones
-- **Preprocesamiento:** K-NN requiere **escalado** (distancias); el Árbol no.  
-- **Rendimiento:** En este dataset numérico, **K-NN (k=9)** superó al Árbol tanto en Accuracy como en F1-macro.  
-- **Trade-offs:** K-NN es sensible a la escala y a *k*. El Árbol brinda **interpretabilidad** y rapidez, pero hay que controlar `max_depth`/`min_samples_leaf` para evitar sobreajuste.
+- **Preprocesamiento:** K-NN requiere escalado (distancias), el Árbol no.  
+- **Rendimiento:** En este dataset numérico, K-NN (k=9) superó al Árbol tanto en Accuracy como en F1-macro.  
+- **Trade-offs:** K-NN es sensible a la escala y a k. El Árbol brinda interpretabilidad y rapidez, pero hay que controlar `max_depth`/`min_samples_leaf` para evitar sobreajuste.
 
