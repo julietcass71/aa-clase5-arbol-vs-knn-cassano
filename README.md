@@ -1,57 +1,29 @@
-AA Clase 5 – Árbol vs KNN
-==============================
+# Clase 5 – Árbol de Decisión vs K-NN
 
-Comparación Árbol de Decisión vs K-NN
+**Dataset:** Breast Cancer Wisconsin (Diagnostic) – `sklearn.datasets`  
+**Objetivo:** Clasificar benigno vs maligno y comparar **K-NN** (con escalado) vs **Árbol de Decisión** (sin escalado).
 
-Project Organization
-------------
+## Metodología
+- Split: `train_test_split(test_size=0.2, stratify=y, random_state=42)`
+- Validación: `StratifiedKFold(n_splits=5, shuffle=True, random_state=42)`
+- **K-NN**: `Pipeline(StandardScaler(), KNeighborsClassifier)`  
+  Grid: `n_neighbors ∈ {1,3,5,7,9,11,15}`, `weights ∈ {uniform, distance}`
+- **Árbol**: `DecisionTreeClassifier`  
+  Grid: `max_depth ∈ {None,3,5,7,10}`, `min_samples_leaf ∈ {1,3,5}`
+- Métricas en test: **Accuracy** y **F1-macro**.
 
-    ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
-    ├── README.md          <- The top-level README for developers using this project.
-    ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
-    │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
-    │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+## Resultados (test)
+| Modelo | Mejores hiperparámetros | Accuracy | F1-macro |
+|---|---|---:|---:|
+| **K-NN** | `{'clf__n_neighbors': 9, 'clf__weights': 'uniform'}` | **0.973684** | **0.971277** |
+| **Árbol** | `{'max_depth': 3, 'min_samples_leaf': 5}` | 0.938596 | 0.933693 |
 
+**Figuras**  
+![Matriz de confusión KNN](reports/figures/cm_knn.png)  
+![Matriz de confusión Árbol](reports/figures/cm_arbol.png)
 
---------
+## Conclusiones
+- **Preprocesamiento:** K-NN requiere **escalado** (distancias); el Árbol no.  
+- **Rendimiento:** En este dataset numérico, **K-NN (k=9)** superó al Árbol tanto en Accuracy como en F1-macro.  
+- **Trade-offs:** K-NN es sensible a la escala y a *k*. El Árbol brinda **interpretabilidad** y rapidez, pero hay que controlar `max_depth`/`min_samples_leaf` para evitar sobreajuste.
 
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
